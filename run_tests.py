@@ -12,28 +12,29 @@ if __name__ == '__main__':
 
     import pytest
 
-    # Prefer testing the installed version, but fallback to testing the
-    # development version.
-    try:
-        import ubelt as ub
-    except ImportError:
-        print('running this test script requires ubelt')
-        raise
-    # Statically check if ``line_profiler`` is installed outside of the repo.
-    # To do this, we make a copy of PYTHONPATH, remove the repodir, and use
-    # ubelt to check to see if ``line_profiler`` can be resolved to a path.
-    temp_path = list(map(abspath, sys.path))
-    if repo_dir in temp_path:
-        temp_path.remove(repo_dir)
-    modpath = ub.modname_to_modpath('line_profiler', sys_path=temp_path)
-    if modpath is not None:
-        # If it does, then import it. This should cause the installed version
-        # to be used on further imports even if the repo_dir is in the path.
-        print('Using installed version of line_profiler')
-        module = ub.import_module_from_path(modpath, index=0)
-        print('Installed module = {!r}'.format(module))
-    else:
-        print('No installed version of line_profiler found')
+    if 1:
+        # Prefer testing the installed version, but fallback to testing the
+        # development version.
+        try:
+            import ubelt as ub
+        except ImportError:
+            print('running this test script requires ubelt')
+            raise
+        # Statically check if ``line_profiler`` is installed outside of the repo.
+        # To do this, we make a copy of PYTHONPATH, remove the repodir, and use
+        # ubelt to check to see if ``line_profiler`` can be resolved to a path.
+        temp_path = list(map(abspath, sys.path))
+        if repo_dir in temp_path:
+            temp_path.remove(repo_dir)
+        modpath = ub.modname_to_modpath('line_profiler', sys_path=temp_path)
+        if modpath is not None:
+            # If it does, then import it. This should cause the installed version
+            # to be used on further imports even if the repo_dir is in the path.
+            print('Using installed version of line_profiler')
+            module = ub.import_module_from_path(modpath, index=0)
+            print('Installed module = {!r}'.format(module))
+        else:
+            print('No installed version of line_profiler found')
 
     try:
         print('Changing dirs to test_dir={!r}'.format(test_dir))

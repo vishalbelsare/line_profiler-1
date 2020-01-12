@@ -52,7 +52,7 @@ script:
   - travis_wait ./run_tests.py
 
 after_success: 
-    - codecov 
+    - codecov --file tests/.coverage
     - gpg --version
     - gpg2 --version
     - export GPG_EXECUTABLE=gpg2
